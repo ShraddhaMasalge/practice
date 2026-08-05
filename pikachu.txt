@@ -1,0 +1,3 @@
+hello my name is pikachu
+and this is practice of how to push code on github using
+ssh remote repo URL
