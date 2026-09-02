@@ -4,10 +4,14 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+# Build production bundle with relative /api path
+ENV VITE_API_URL=/api
 RUN npm run build
 
 # Nginx Alpine runtime
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+# Copy custom Nginx configuration with reverse proxy for /api/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
